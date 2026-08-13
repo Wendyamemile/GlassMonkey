@@ -1,0 +1,21 @@
+{
+  "name": "glassmonkey-auto-glass",
+  "version": "1.0.0",
+  "description": "GlassMonkey Mobile Auto Glass Website, REST API & Admin Dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "auto-glass",
+    "windshield-replacement",
+    "express",
+    "sqlite"
+  ],
+  "author": "GlassMonkey",
+  "license": "ISC"
+}

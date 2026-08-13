@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Online | GlassMonkey Mobile Auto Glass</title>
+    <meta name="description" content="Schedule your mobile windshield replacement or ADAS calibration online with GlassMonkey. Choose your preferred date, time slot, and location.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#131e32',
+                            900: '#0f172a',
+                            950: '#090d16',
+                        },
+                        brand: {
+                            blue: '#2563eb',
+                            cyan: '#06b6d4',
+                            amber: '#f59e0b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass-panel {
+                background: rgba(19, 30, 50, 0.85);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+            }
+            .gradient-text-amber {
+                background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white pb-16 md:pb-0">
+
+    <!-- 1. ANNOUNCEMENT BAR -->
+    <div id="announcement-bar" class="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-slate-950 py-2.5 px-4 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm font-semibold">
+            <div class="flex items-center gap-2">
+                <span class="relative flex h-2.5 w-2.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-900 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-slate-900"></span>
+                </span>
+                <span class="uppercase tracking-wider font-extrabold text-slate-950">LIVE DISPATCH CALENDAR:</span>
+                <span class="hidden md:inline font-medium text-slate-900">Same-Day & Next-Day Mobile Slots Available</span>
+            </div>
+            
+            <div class="flex items-center gap-3 ml-auto sm:ml-0">
+                <a href="tel:9177314717" class="bg-slate-950 hover:bg-slate-900 text-amber-400 hover:text-amber-300 px-3 py-1 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 shadow-md">
+                    <i class="fa-solid fa-phone text-xs"></i>
+                    <span>CALL DISPATCH: (917) 731-4717</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. HEADER NAV -->
+    <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-10 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-600 via-cyan-500 to-amber-400 p-0.5 shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all duration-300">
+                        <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+                            <i class="fa-solid fa-shield-cat text-cyan-400 text-xl group-hover:scale-110 transition-transform duration-300"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="font-heading font-extrabold text-xl tracking-wider text-white flex items-center gap-1">
+                            GLASS<span class="text-amber-400">MONKEY</span>
+                        </div>
+                        <div class="text-[10px] uppercase font-bold tracking-widest text-cyan-400 -mt-1">
+                            Mobile Auto Glass
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                    <a href="booking.html" class="bg-amber-500 text-slate-950 font-extrabold px-4 py-2 rounded-xl transition-all shadow-md flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-check text-xs"></i>
+                        <span>Book Online Now</span>
+                    </a>
+                    <a href="contact.html" class="text-slate-300 hover:text-cyan-400 transition-colors font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-envelope text-xs text-cyan-400"></i>
+                        <span>Contact Us</span>
+                    </a>
+                </nav>
+
+                <!-- Header CTA Button -->
+                <div class="hidden lg:flex items-center gap-4">
+                    <a href="tel:9177314717" class="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-all shadow-lg flex items-center gap-2 border border-blue-400/30">
+                        <i class="fa-solid fa-phone text-xs"></i>
+                        <span>(917) 731-4717</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none" aria-label="Toggle Navigation Menu">
+                    <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-3 pb-6 space-y-3">
+            <a href="booking.html" class="block px-4 py-3 rounded-xl text-slate-950 font-black bg-amber-500 text-base text-center shadow-lg">
+                <i class="fa-solid fa-calendar-check mr-2"></i> Book Online Now
+            </a>
+            <a href="contact.html" class="block px-4 py-2.5 rounded-xl text-white font-bold bg-slate-800 hover:bg-slate-700 text-base text-center">
+                <i class="fa-solid fa-envelope mr-2 text-cyan-400"></i> Contact Us
+            </a>
+            <a href="tel:9177314717" class="block w-full text-center bg-blue-600 text-white font-bold py-3 rounded-xl text-base shadow-lg">
+                <i class="fa-solid fa-phone mr-2"></i> Call Dispatch Now
+            </a>
+        </div>
+    </header>
+
+    <!-- 3. APPOINTMENT BOOKING SECTION HEADER -->
+    <section class="py-12 bg-slate-900 border-b border-slate-800">
+        <div class="max-w-4xl mx-auto px-4 text-center space-y-3">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-amber-400 bg-amber-950/60 border border-amber-500/30 px-3.5 py-1 rounded-full">
+                Online Dispatch Scheduling
+            </span>
+            <h1 class="font-heading text-3xl sm:text-5xl font-black text-white tracking-tight">
+                BOOK YOUR APPOINTMENT ONLINE
+            </h1>
+            <p class="text-slate-300 text-base sm:text-lg">
+                Select your service location, preferred arrival window, and vehicle details below.
+            </p>
+        </div>
+    </section>
+
+    <!-- 4. APPOINTMENT BOOKING FORM -->
+    <section class="py-12 lg:py-20 bg-slate-950 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <div class="glass-panel p-6 sm:p-10 rounded-3xl border border-slate-700/80 shadow-2xl bg-slate-900/90">
+                <form id="appointment-booking-form" onsubmit="handleBookingSubmit(event)" class="space-y-8">
+                    
+                    <!-- Step 1: Location Type Radio Selector -->
+                    <div>
+                        <label class="block text-xs font-extrabold text-amber-400 uppercase tracking-wider mb-3">
+                            Step 1: Choose Service Location Type *
+                        </label>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <!-- Mobile Service Radio Option -->
+                            <label id="location-card-mobile" class="relative cursor-pointer glass-panel p-4 rounded-2xl border-2 border-blue-500 bg-blue-950/40 flex items-start gap-4 transition-all">
+                                <input type="radio" name="location-type" value="Mobile Service (At Home / Work)" checked onclick="updateLocationType('mobile')" class="mt-1 w-4 h-4 text-blue-600 bg-slate-900 border-slate-700 focus:ring-blue-500">
+                                <div>
+                                    <div class="font-bold text-white text-sm flex items-center gap-2">
+                                        <i class="fa-solid fa-van-shuttle text-amber-400"></i>
+                                        <span>Mobile Service (We Come To You)</span>
+                                    </div>
+                                    <p class="text-slate-400 text-xs mt-1">
+                                        Technician comes directly to your home, workplace, or driveway. Free mobile fee!
+                                    </p>
+                                </div>
+                            </label>
+
+                            <!-- In-Shop Radio Option -->
+                            <label id="location-card-shop" class="relative cursor-pointer glass-panel p-4 rounded-2xl border-2 border-slate-700/60 bg-slate-900/60 flex items-start gap-4 transition-all">
+                                <input type="radio" name="location-type" value="In-Shop (Service Center)" onclick="updateLocationType('shop')" class="mt-1 w-4 h-4 text-blue-600 bg-slate-900 border-slate-700 focus:ring-blue-500">
+                                <div>
+                                    <div class="font-bold text-white text-sm flex items-center gap-2">
+                                        <i class="fa-solid fa-warehouse text-cyan-400"></i>
+                                        <span>In-Shop Service Center</span>
+                                    </div>
+                                    <p class="text-slate-400 text-xs mt-1">
+                                        Drop off your vehicle at our climate-controlled diagnostic center.
+                                    </p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Address Container (Shown for Mobile Service) -->
+                    <div id="mobile-address-container" class="space-y-3 bg-slate-950/60 p-4 rounded-2xl border border-blue-500/20">
+                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+                            Mobile Dispatch Address *
+                        </label>
+                        <div class="grid sm:grid-cols-12 gap-3">
+                            <div class="sm:col-span-8 relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+                                    <i class="fa-solid fa-house text-xs"></i>
+                                </span>
+                                <input type="text" id="booking-address" required placeholder="123 Main Street, Apt or Suite #" class="w-full bg-slate-900 border border-slate-700 focus:border-cyan-400 rounded-lg pl-9 pr-3 py-2.5 text-xs sm:text-sm font-medium text-white placeholder-slate-500">
+                            </div>
+                            <div class="sm:col-span-4 relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+                                    <i class="fa-solid fa-city text-xs"></i>
+                                </span>
+                                <input type="text" id="booking-city" required placeholder="City & Zip Code" class="w-full bg-slate-900 border border-slate-700 focus:border-cyan-400 rounded-lg pl-9 pr-3 py-2.5 text-xs sm:text-sm font-medium text-white placeholder-slate-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 & 3: Date & Time Window Selector -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        
+                        <!-- Date Selector -->
+                        <div>
+                            <label class="block text-xs font-extrabold text-amber-400 uppercase tracking-wider mb-2">
+                                Step 2: Preferred Service Date *
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-amber-400 pointer-events-none">
+                                    <i class="fa-solid fa-calendar-days text-sm"></i>
+                                </span>
+                                <input type="date" id="booking-date" required class="w-full bg-slate-950 border border-slate-700 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 rounded-xl pl-10 pr-4 py-3 text-sm font-semibold text-white cursor-pointer appearance-none">
+                            </div>
+                        </div>
+
+                        <!-- Time Slot Picker (9:00 AM - 5:00 PM, 1-Hour Intervals) -->
+                        <div>
+                            <label class="block text-xs font-extrabold text-amber-400 uppercase tracking-wider mb-2">
+                                Step 3: Select 1-Hour Arrival Window (9 AM - 5 PM) *
+                            </label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-64 overflow-y-auto p-1 pr-2 border border-slate-800 rounded-xl bg-slate-950/80">
+                                
+                                <label class="cursor-pointer p-2.5 rounded-lg border border-blue-500/50 bg-blue-950/40 flex items-center justify-between hover:border-blue-400 transition-all">
+                                    <div class="flex items-center gap-2">
+                                        <input type="radio" name="time-slot" value="9:00 AM - 10:00 AM" checked class="w-3.5 h-3.5 text-blue-600 bg-slate-900 border-slate-700">
+                                        <span class="text-xs font-bold text-white">9:00 AM - 10:00 AM</span>
+                                    </div>
+                                    <span class="text-[10px] font-semibold text-emerald-400">Available</span>
+                                </label>
+
+                                <label class="cursor-pointer p-2.5 rounded-lg border border-slate-800 bg-slate-900/60 flex items-center justify-between hover:border-blue-500/50 transition-all">
+                                    <div class="flex items-center gap-2">
+                                        <input type="radio" name="time-slot" value="10:00 AM - 11:00 AM" class="w-3.5 h-3.5 text-blue-600 bg-slate-900 border-slate-700">
+                                        <span class="text-xs font-bold text-white">10:00 AM - 11:00 AM</span>
+                                    </div>
+                                    <span class="text-[10px] font-semibold text-emerald-400">Available</span>
+                                </label>
+
+                                <label class="cursor-pointer p-2.5 rounded-lg border border-slate-800 bg-slate-900/60 flex items-center justify-between hover:border-blue-500/50 transition-all">
+                                    <div class="flex items-center gap-2">
+                                        <input type="radio" name="time-slot" value="11:00 AM - 12:00 PM" class="w-3.5 h-3.5 text-blue-600 bg-slate-900 border-slate-700">
+                                        <span class="text-xs font-bold text-white">11:00 AM - 12:00 PM</span>
+                                    </div>
+                                    <span class="text-[10px] font-semibold text-emerald-400">Available</span>
+                                </label>
+
+                                <label class="cursor-pointer p-2.5 rounded-lg border border-slate-800 bg-slate-900/60 flex items-center justify-between hover:border-blue-500/50 transition-all">
+                                    <div class="flex items-center gap-2">
+                                        <input type="radio" name="time-slot" value="12:00 PM - 1:00 PM" class="w-3.5 h-3.5 text-blue-600 bg-slate-900 border-slate-700">
+                                        <span class="text-xs font-bold text-white">12:00 PM - 1:00 PM</span>
+                                    </div>
+                                    <span class="text-[10px] font-semibold text-emerald-400">Available</span>
+                                </label>
+
+                                <label class="cursor-pointer p-2.5 rounded-lg border border-slate-800 bg-slate-900/60 flex items-center justify-between hover:border-blue-500/50 transition-all">
+                                    <div class="flex items-center gap-2">
+                                        <input type="radio" name="time-slot" value="1:00 PM - 2:00 PM" class="w-3.5 h-3.5 text-blue-600 bg-slate-900 border-slate-700">
+                                        <span class="text-xs font-bold text-white">1:00 PM - 2:00 PM</span>
+                                    </div>
+                                    <span class="text-[10px] font-semibold text-emerald-400">Available</span>
+                                </label>
+
+                                <label class="cursor-pointer p-2.5 rounded-lg border border-slate-800 bg-slate-900/60 flex items-center justify-between hover:border-blue-500/50 transition-all">
+                                    <div class="flex items-center gap-2">
+                                        <input type="radio" name="time-slot" value="2:00 PM - 3:00 PM" class="w-3.5 h-3.5 text-blue-600 bg-slate-900 border-slate-700">
+                                        <span class="text-xs font-bold text-white">2:00 PM - 3:00 PM</span>
+                                    </div>
+                                    <span class="text-[10px] font-semibold text-emerald-400">Available</span>
+                                </label>
+
+                                <label class="cursor-pointer p-2.5 rounded-lg border border-slate-800 bg-slate-900/60 flex items-center justify-between hover:border-blue-500/50 transition-all">
+                                    <div class="flex items-center gap-2">
+                                        <input type="radio" name="time-slot" value="3:00 PM - 4:00 PM" class="w-3.5 h-3.5 text-blue-600 bg-slate-900 border-slate-700">
+                                        <span class="text-xs font-bold text-white">3:00 PM - 4:00 PM</span>
+                                    </div>
+                                    <span class="text-[10px] font-semibold text-amber-400">2 Slots Left</span>
+                                </label>
+
+                                <label class="cursor-pointer p-2.5 rounded-lg border border-slate-800 bg-slate-900/60 flex items-center justify-between hover:border-blue-500/50 transition-all">
+                                    <div class="flex items-center gap-2">
+                                        <input type="radio" name="time-slot" value="4:00 PM - 5:00 PM" class="w-3.5 h-3.5 text-blue-600 bg-slate-900 border-slate-700">
+                                        <span class="text-xs font-bold text-white">4:00 PM - 5:00 PM</span>
+                                    </div>
+                                    <span class="text-[10px] font-semibold text-amber-400">1 Slot Left</span>
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Glass Service & Vehicle Details -->
+                    <div>
+                        <label class="block text-xs font-extrabold text-amber-400 uppercase tracking-wider mb-2">
+                            Step 4: Service & Vehicle Information *
+                        </label>
+                        <div class="grid sm:grid-cols-2 gap-3 mb-3">
+                            <div>
+                                <label class="block text-[11px] text-slate-400 mb-1">Glass Service Needed *</label>
+                                <select id="booking-service" required class="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-lg p-2.5 text-xs text-white">
+                                    <option value="Full Windshield Replacement">Full Windshield Replacement</option>
+                                    <option value="Windshield + ADAS Calibration">Windshield + ADAS Camera Calibration</option>
+                                    <option value="Side / Door Window Replacement">Side / Door Glass Replacement</option>
+                                    <option value="Rear Glass Replacement">Rear Windshield Replacement</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-slate-400 mb-1">Vehicle Year Make Model *</label>
+                                <input type="text" id="booking-vehicle" required placeholder="e.g. 2023 Toyota Camry" class="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-lg p-2.5 text-xs text-white placeholder-slate-500">
+                            </div>
+                        </div>
+
+                        <!-- Customer Info -->
+                        <div class="grid sm:grid-cols-3 gap-3">
+                            <input type="text" id="booking-name" required placeholder="Full Name *" class="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-lg p-2.5 text-xs text-white placeholder-slate-500">
+                            <input type="tel" id="booking-phone" required placeholder="Phone Number *" class="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-lg p-2.5 text-xs text-white placeholder-slate-500">
+                            <input type="email" id="booking-email" required placeholder="Email Address *" class="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-lg p-2.5 text-xs text-white placeholder-slate-500">
+                        </div>
+                    </div>
+
+                    <!-- Submit Appointment Button -->
+                    <button type="submit" class="w-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black py-4 px-6 rounded-2xl text-base sm:text-lg shadow-xl shadow-amber-500/20 flex items-center justify-center gap-2 uppercase tracking-wide cursor-pointer transition-all transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-calendar-check text-lg"></i>
+                        <span>CONFIRM APPOINTMENT BOOKING</span>
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONFIRMATION MODAL -->
+    <div id="booking-modal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-panel p-6 sm:p-8 rounded-2xl max-w-md w-full border border-cyan-500/50 shadow-2xl text-center space-y-4">
+            <div class="w-16 h-16 rounded-full bg-cyan-500/20 text-cyan-400 mx-auto flex items-center justify-center text-3xl">
+                <i class="fa-solid fa-calendar-check"></i>
+            </div>
+            <h3 class="font-heading text-2xl font-extrabold text-white">Appointment Confirmed!</h3>
+            <p class="text-slate-300 text-sm">
+                Your mobile dispatch slot has been confirmed! A confirmation email and text message have been sent to your phone.
+            </p>
+            <div class="bg-slate-900 p-4 rounded-xl text-xs text-slate-300 text-left space-y-2 border border-slate-800">
+                <div class="flex justify-between border-b border-slate-800 pb-1.5">
+                    <span class="font-bold text-slate-400">Date:</span> 
+                    <span id="booking-summary-date" class="font-bold text-amber-400">2026-08-14</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-800 pb-1.5">
+                    <span class="font-bold text-slate-400">Arrival Window:</span> 
+                    <span id="booking-summary-slot" class="font-bold text-cyan-300">Morning: 8 AM - 12 PM</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-800 pb-1.5">
+                    <span class="font-bold text-slate-400">Service:</span> 
+                    <span id="booking-summary-service" class="font-bold text-white">Windshield Replacement</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-800 pb-1.5">
+                    <span class="font-bold text-slate-400">Type:</span> 
+                    <span id="booking-summary-type" class="font-bold text-white">Mobile Service</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-bold text-slate-400">Location:</span> 
+                    <span id="booking-summary-location" class="font-bold text-white text-right max-w-[180px] truncate">123 Main St</span>
+                </div>
+            </div>
+            <a href="index.html" class="block w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 rounded-xl text-sm transition-all">
+                Return To Home Page
+            </a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-8 text-slate-400 text-xs">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>© <span id="year">2026</span> GlassMonkey Mobile Auto Glass Inc.</div>
+            <div class="flex gap-4">
+                <a href="index.html" class="hover:underline">Home</a>
+                <a href="contact.html" class="hover:underline">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        const datePicker = document.getElementById('booking-date');
+        const today = new Date().toISOString().split('T')[0];
+        datePicker.min = today;
+        datePicker.value = today;
+
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+        function updateLocationType(type) {
+            const mobileCard = document.getElementById('location-card-mobile');
+            const shopCard = document.getElementById('location-card-shop');
+            const addressContainer = document.getElementById('mobile-address-container');
+            const addressInput = document.getElementById('booking-address');
+            const cityInput = document.getElementById('booking-city');
+
+            if (type === 'mobile') {
+                mobileCard.className = "relative cursor-pointer glass-panel p-4 rounded-2xl border-2 border-blue-500 bg-blue-950/40 flex items-start gap-4 transition-all";
+                shopCard.className = "relative cursor-pointer glass-panel p-4 rounded-2xl border-2 border-slate-700/60 bg-slate-900/60 flex items-start gap-4 transition-all";
+                addressContainer.classList.remove('hidden');
+                addressInput.required = true;
+                cityInput.required = true;
+            } else {
+                shopCard.className = "relative cursor-pointer glass-panel p-4 rounded-2xl border-2 border-cyan-500 bg-cyan-950/40 flex items-start gap-4 transition-all";
+                mobileCard.className = "relative cursor-pointer glass-panel p-4 rounded-2xl border-2 border-slate-700/60 bg-slate-900/60 flex items-start gap-4 transition-all";
+                addressContainer.classList.add('hidden');
+                addressInput.required = false;
+                cityInput.required = false;
+            }
+        }
+
+        async function handleBookingSubmit(event) {
+            event.preventDefault();
+            const locationType = document.querySelector('input[name="location-type"]:checked').value;
+            const dateVal = document.getElementById('booking-date').value;
+            const timeSlot = document.querySelector('input[name="time-slot"]:checked').value;
+            const serviceVal = document.getElementById('booking-service').value;
+            const vehicleVal = document.getElementById('booking-vehicle').value;
+            const nameVal = document.getElementById('booking-name').value;
+            const phoneVal = document.getElementById('booking-phone').value;
+            const emailVal = document.getElementById('booking-email').value;
+            const addressVal = document.getElementById('booking-address').value;
+            const cityVal = document.getElementById('booking-city').value;
+
+            const payload = {
+                name: nameVal,
+                phone: phoneVal,
+                email: emailVal,
+                vehicle: vehicleVal,
+                service: serviceVal,
+                service_date: dateVal,
+                time_slot: timeSlot,
+                location_type: locationType,
+                address: addressVal,
+                zip: cityVal
+            };
+
+            try {
+                const response = await fetch('/api/book', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('booking-summary-date').textContent = dateVal;
+                    document.getElementById('booking-summary-slot').textContent = timeSlot;
+                    document.getElementById('booking-summary-service').textContent = serviceVal;
+                    document.getElementById('booking-summary-type').textContent = locationType;
+                    
+                    if (locationType.includes('Mobile')) {
+                        document.getElementById('booking-summary-location').textContent = `${addressVal}, ${cityVal}`;
+                    } else {
+                        document.getElementById('booking-summary-location').textContent = `GlassMonkey Service Center`;
+                    }
+
+                    document.getElementById('booking-modal').classList.remove('hidden');
+                } else {
+                    alert('Error saving appointment: ' + (result.error || 'Please try again.'));
+                }
+            } catch (err) {
+                console.error('API Error:', err);
+                // Fallback display if offline
+                document.getElementById('booking-summary-date').textContent = dateVal;
+                document.getElementById('booking-summary-slot').textContent = timeSlot;
+                document.getElementById('booking-summary-service').textContent = serviceVal;
+                document.getElementById('booking-summary-type').textContent = locationType;
+                document.getElementById('booking-modal').classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

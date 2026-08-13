@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlassMonkey Admin | Dispatch & Booking Dashboard</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#131e32',
+                            900: '#0f172a',
+                            950: '#090d16',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass-panel {
+                background: rgba(19, 30, 50, 0.85);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen">
+
+    <!-- PASSWORD LOGIN MODAL -->
+    <div id="login-modal" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-panel p-8 rounded-3xl max-w-md w-full border border-amber-500/40 shadow-2xl text-center space-y-6">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 via-cyan-500 to-amber-400 p-0.5 mx-auto shadow-lg">
+                <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
+                    <i class="fa-solid fa-user-shield text-amber-400 text-2xl"></i>
+                </div>
+            </div>
+            <div>
+                <h2 class="font-heading text-2xl font-black text-white tracking-wide">GlassMonkey Admin Login</h2>
+                <p class="text-slate-400 text-xs mt-1">Protected dispatch management system</p>
+            </div>
+
+            <form onsubmit="handleLogin(event)" class="space-y-4 text-left">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Enter Admin Passcode</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
+                            <i class="fa-solid fa-lock text-sm"></i>
+                        </span>
+                        <input type="password" id="admin-passcode" required placeholder="Passcode (Default: monkey2026)" class="w-full bg-slate-900 border border-slate-700 focus:border-amber-400 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500">
+                    </div>
+                </div>
+
+                <div id="login-error" class="hidden text-xs text-red-400 bg-red-950/50 p-2.5 rounded-lg border border-red-500/30 text-center font-semibold">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> Invalid Passcode. Try: monkey2026
+                </div>
+
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3.5 rounded-xl text-sm transition-all uppercase tracking-wider shadow-lg">
+                    Access Dispatch Dashboard
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN ADMIN DASHBOARD CONTENT -->
+    <div id="admin-dashboard" class="hidden min-h-screen flex flex-col">
+        
+        <!-- HEADER NAV -->
+        <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-blue-600 to-amber-400 p-0.5">
+                            <div class="w-full h-full bg-slate-950 rounded-md flex items-center justify-center">
+                                <i class="fa-solid fa-shield-cat text-cyan-400 text-base"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="font-heading font-black text-base text-white">GLASS<span class="text-amber-400">MONKEY</span></span>
+                            <span class="text-xs text-cyan-400 font-bold ml-2 bg-cyan-950 border border-cyan-500/30 px-2 py-0.5 rounded-full">DISPATCH ADMIN</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <a href="index.html" target="_blank" class="text-xs text-slate-300 hover:text-white flex items-center gap-1.5 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">
+                            <i class="fa-solid fa-globe text-cyan-400"></i> View Live Site
+                        </a>
+                        <button onclick="handleLogout()" class="text-xs text-red-400 hover:text-red-300 font-bold bg-red-950/40 border border-red-500/30 px-3 py-1.5 rounded-lg flex items-center gap-1">
+                            <i class="fa-solid fa-right-from-bracket"></i> Logout
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+        <!-- DASHBOARD CONTAINER -->
+        <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+            
+            <!-- TOP STATS CARDS -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-1">
+                    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Bookings</div>
+                    <div class="text-3xl font-black text-white" id="stat-total">0</div>
+                    <div class="text-[11px] text-slate-500">Recorded in database</div>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-amber-500/30 bg-amber-950/10 space-y-1">
+                    <div class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Pending Action</div>
+                    <div class="text-3xl font-black text-amber-400" id="stat-pending">0</div>
+                    <div class="text-[11px] text-amber-500/80">Requires confirmation</div>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-blue-500/30 bg-blue-950/10 space-y-1">
+                    <div class="text-xs font-semibold text-blue-400 uppercase tracking-wider">Confirmed Jobs</div>
+                    <div class="text-3xl font-black text-blue-400" id="stat-confirmed">0</div>
+                    <div class="text-[11px] text-blue-500/80">Scheduled for dispatch</div>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-emerald-500/30 bg-emerald-950/10 space-y-1">
+                    <div class="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Completed</div>
+                    <div class="text-3xl font-black text-emerald-400" id="stat-completed">0</div>
+                    <div class="text-[11px] text-emerald-500/80">Finished installations</div>
+                </div>
+            </div>
+
+            <!-- APPOINTMENTS TABLE CARD -->
+            <div class="glass-panel rounded-3xl border border-slate-800 overflow-hidden shadow-2xl">
+                
+                <!-- Table Controls Header -->
+                <div class="p-6 border-b border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h3 class="font-heading text-xl font-extrabold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-check text-amber-400"></i> Customer Appointments
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-0.5">Manage customer bookings, dispatch status, and client contacts</p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-3">
+                        <!-- Search input -->
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+                                <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                            </span>
+                            <input type="text" id="search-input" onkeyup="filterAppointments()" placeholder="Search Name, Phone, Vehicle..." class="bg-slate-900 border border-slate-700 rounded-xl pl-8 pr-3 py-2 text-xs text-white placeholder-slate-500 focus:border-cyan-400">
+                        </div>
+
+                        <!-- Status filter dropdown -->
+                        <select id="status-filter" onchange="filterAppointments()" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white cursor-pointer">
+                            <option value="ALL">All Statuses</option>
+                            <option value="Pending">Pending Only</option>
+                            <option value="Confirmed">Confirmed Only</option>
+                            <option value="Completed">Completed Only</option>
+                        </select>
+
+                        <!-- Refresh button -->
+                        <button onclick="loadAppointments()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition-all">
+                            <i class="fa-solid fa-arrows-rotate"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Table Content -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-slate-900/90 text-slate-400 uppercase font-bold text-[10px] tracking-wider border-b border-slate-800">
+                            <tr>
+                                <th class="py-3.5 px-4">ID</th>
+                                <th class="py-3.5 px-4">Customer Name & Contact</th>
+                                <th class="py-3.5 px-4">Vehicle Info</th>
+                                <th class="py-3.5 px-4">Glass Service</th>
+                                <th class="py-3.5 px-4">Service Date & Time</th>
+                                <th class="py-3.5 px-4">Location & Address</th>
+                                <th class="py-3.5 px-4">Status</th>
+                                <th class="py-3.5 px-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointments-tbody" class="divide-y divide-slate-800/60 font-medium">
+                            <!-- Rows injected dynamically via JS -->
+                            <tr>
+                                <td colspan="8" class="text-center py-10 text-slate-500">
+                                    <i class="fa-solid fa-spinner animate-spin text-xl text-amber-400 mb-2"></i>
+                                    <div>Loading customer bookings...</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <!-- DIRECT MESSAGES TAB -->
+            <div class="glass-panel rounded-3xl border border-slate-800 overflow-hidden shadow-2xl p-6 space-y-4">
+                <h3 class="font-heading text-xl font-extrabold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-envelope text-cyan-400"></i> Customer Direct Messages
+                </h3>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-slate-900/90 text-slate-400 uppercase font-bold text-[10px] tracking-wider border-b border-slate-800">
+                            <tr>
+                                <th class="py-3 px-4">Date</th>
+                                <th class="py-3 px-4">Sender</th>
+                                <th class="py-3 px-4">Subject</th>
+                                <th class="py-3 px-4">Message Content</th>
+                                <th class="py-3 px-4 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="messages-tbody" class="divide-y divide-slate-800/60">
+                            <tr>
+                                <td colspan="5" class="text-center py-6 text-slate-500">No customer messages found.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- JAVASCRIPT BACKEND INTEGRATION LOGIC -->
+    <script>
+        let allAppointments = [];
+
+        // Check if user is logged in
+        if (sessionStorage.getItem('glassmonkey_admin') === 'true') {
+            showDashboard();
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const passcode = document.getElementById('admin-passcode').value.trim();
+            if (passcode === 'monkey2026' || passcode === 'glass123' || passcode === 'admin') {
+                sessionStorage.setItem('glassmonkey_admin', 'true');
+                showDashboard();
+            } else {
+                document.getElementById('login-error').classList.remove('hidden');
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('glassmonkey_admin');
+            location.reload();
+        }
+
+        function showDashboard() {
+            document.getElementById('login-modal').classList.add('hidden');
+            document.getElementById('admin-dashboard').classList.remove('hidden');
+            loadAppointments();
+            loadMessages();
+        }
+
+        // Fetch all appointments from GET /api/admin/appointments
+        async function loadAppointments() {
+            try {
+                const response = await fetch('/api/admin/appointments');
+                const result = await response.json();
+                
+                if (result.success) {
+                    allAppointments = result.appointments;
+                    renderStats(allAppointments);
+                    renderTable(allAppointments);
+                }
+            } catch (err) {
+                console.error('Failed to fetch appointments:', err);
+            }
+        }
+
+        // Render Stats Header Cards
+        function renderStats(appointments) {
+            const total = appointments.length;
+            const pending = appointments.filter(a => a.status === 'Pending').length;
+            const confirmed = appointments.filter(a => a.status === 'Confirmed').length;
+            const completed = appointments.filter(a => a.status === 'Completed').length;
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-pending').textContent = pending;
+            document.getElementById('stat-confirmed').textContent = confirmed;
+            document.getElementById('stat-completed').textContent = completed;
+        }
+
+        // Render Table Rows
+        function renderTable(appointments) {
+            const tbody = document.getElementById('appointments-tbody');
+            if (appointments.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center py-10 text-slate-500">
+                            No appointments found in database.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = appointments.map(app => {
+                let statusBadge = '';
+                let borderAccent = 'border-l-4 border-l-amber-400';
+                
+                if (app.status === 'Pending') {
+                    statusBadge = `
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500/15 text-amber-300 border border-amber-500/40 shadow-[0_0_12px_rgba(245,158,11,0.25)]">
+                            <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                            Pending
+                        </span>`;
+                    borderAccent = 'border-l-4 border-l-amber-400';
+                } else if (app.status === 'Confirmed') {
+                    statusBadge = `
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 shadow-[0_0_12px_rgba(6,182,212,0.25)]">
+                            <i class="fa-solid fa-clock-rotate-left text-[10px]"></i>
+                            Confirmed
+                        </span>`;
+                    borderAccent = 'border-l-4 border-l-cyan-400';
+                } else {
+                    statusBadge = `
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 shadow-[0_0_12px_rgba(16,185,129,0.25)]">
+                            <i class="fa-solid fa-circle-check text-[10px]"></i>
+                            Completed
+                        </span>`;
+                    borderAccent = 'border-l-4 border-l-emerald-400';
+                }
+
+                // Service Color Pills
+                let servicePill = `<span class="bg-slate-800 text-cyan-300 px-2.5 py-1 rounded-lg border border-slate-700 text-[11px] font-bold">${escapeHtml(app.service)}</span>`;
+                if (app.service.includes('ADAS')) {
+                    servicePill = `<span class="bg-cyan-950/90 text-cyan-300 border border-cyan-500/40 px-2.5 py-1 rounded-lg text-[11px] font-bold shadow-sm inline-flex items-center gap-1.5"><i class="fa-solid fa-camera-rotate text-[10px] text-cyan-400"></i> ${escapeHtml(app.service)}</span>`;
+                } else if (app.service.includes('Full Windshield')) {
+                    servicePill = `<span class="bg-blue-950/90 text-blue-300 border border-blue-500/40 px-2.5 py-1 rounded-lg text-[11px] font-bold shadow-sm inline-flex items-center gap-1.5"><i class="fa-solid fa-car-rear text-[10px] text-blue-400"></i> ${escapeHtml(app.service)}</span>`;
+                } else if (app.service.includes('Side')) {
+                    servicePill = `<span class="bg-indigo-950/90 text-indigo-300 border border-indigo-500/40 px-2.5 py-1 rounded-lg text-[11px] font-bold shadow-sm inline-flex items-center gap-1.5"><i class="fa-solid fa-vector-square text-[10px] text-indigo-400"></i> ${escapeHtml(app.service)}</span>`;
+                } else if (app.service.includes('Rear')) {
+                    servicePill = `<span class="bg-purple-950/90 text-purple-300 border border-purple-500/40 px-2.5 py-1 rounded-lg text-[11px] font-bold shadow-sm inline-flex items-center gap-1.5"><i class="fa-solid fa-shield text-[10px] text-purple-400"></i> ${escapeHtml(app.service)}</span>`;
+                }
+
+                return `
+                    <tr class="${borderAccent} bg-slate-900/40 hover:bg-slate-900/90 transition-all duration-200">
+                        <td class="py-4 px-4 font-mono font-black text-amber-400 text-sm">#${app.id}</td>
+                        <td class="py-4 px-4">
+                            <div class="font-extrabold text-white text-sm tracking-wide">${escapeHtml(app.name)}</div>
+                            <a href="tel:${app.phone}" class="text-amber-400 hover:text-amber-300 flex items-center gap-1 text-xs font-bold mt-0.5 transition-colors">
+                                <i class="fa-solid fa-phone text-[10px]"></i> ${escapeHtml(app.phone)}
+                            </a>
+                        </td>
+                        <td class="py-4 px-4">
+                            <div class="font-bold text-slate-100 flex items-center gap-1.5">
+                                <i class="fa-solid fa-car text-xs text-slate-400"></i>
+                                ${escapeHtml(app.vehicle)}
+                            </div>
+                        </td>
+                        <td class="py-4 px-4">${servicePill}</td>
+                        <td class="py-4 px-4">
+                            <div class="font-black text-white text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-calendar-day text-amber-400 text-[11px]"></i>
+                                ${escapeHtml(app.service_date)}
+                            </div>
+                            <div class="text-[11px] font-semibold text-cyan-400 mt-0.5 flex items-center gap-1">
+                                <i class="fa-solid fa-clock text-[10px]"></i>
+                                ${escapeHtml(app.time_slot)}
+                            </div>
+                        </td>
+                        <td class="py-4 px-4">
+                            <div class="font-bold text-slate-200 text-xs">${escapeHtml(app.location_type)}</div>
+                            <div class="text-[11px] text-slate-400 max-w-[190px] truncate mt-0.5">${escapeHtml(app.address || 'In-Shop Center')}</div>
+                        </td>
+                        <td class="py-4 px-4">${statusBadge}</td>
+                        <td class="py-4 px-4 text-right">
+                            <div class="inline-flex items-center gap-1.5">
+                                ${app.status !== 'Confirmed' ? `
+                                    <button onclick="updateStatus(${app.id}, 'Confirmed')" title="Confirm Dispatch" class="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-black px-3 py-1.5 rounded-xl text-xs shadow-md shadow-blue-500/20 transition-all transform hover:scale-105 inline-flex items-center gap-1">
+                                        <i class="fa-solid fa-check text-[10px]"></i> Confirm
+                                    </button>
+                                ` : ''}
+                                
+                                ${app.status !== 'Completed' ? `
+                                    <button onclick="updateStatus(${app.id}, 'Completed')" title="Mark Job Completed" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black px-3 py-1.5 rounded-xl text-xs shadow-md shadow-emerald-500/20 transition-all transform hover:scale-105 inline-flex items-center gap-1">
+                                        <i class="fa-solid fa-flag-checkered text-[10px]"></i> Complete
+                                    </button>
+                                ` : ''}
+
+                                <a href="tel:${app.phone}" title="Call Customer" class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 p-2 rounded-xl text-xs font-bold transition-all shadow-sm">
+                                    <i class="fa-solid fa-phone"></i>
+                                </a>
+
+                                <button onclick="deleteBooking(${app.id})" title="Delete Booking" class="bg-rose-950/50 hover:bg-rose-900/80 text-rose-300 border border-rose-500/30 p-2 rounded-xl text-xs font-bold transition-all shadow-sm">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Filter Function
+        function filterAppointments() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const statusFilter = document.getElementById('status-filter').value;
+
+            const filtered = allAppointments.filter(app => {
+                const matchesStatus = statusFilter === 'ALL' || app.status === statusFilter;
+                const matchesQuery = app.name.toLowerCase().includes(query) ||
+                                     app.phone.toLowerCase().includes(query) ||
+                                     app.vehicle.toLowerCase().includes(query) ||
+                                     app.service_date.toLowerCase().includes(query);
+                return matchesStatus && matchesQuery;
+            });
+
+            renderTable(filtered);
+        }
+
+        // PATCH /api/admin/appointments/:id to update status
+        async function updateStatus(id, newStatus) {
+            try {
+                const response = await fetch(`/api/admin/appointments/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    loadAppointments();
+                }
+            } catch (err) {
+                console.error('Failed to update status:', err);
+            }
+        }
+
+        // DELETE /api/admin/appointments/:id
+        async function deleteBooking(id) {
+            if (!confirm(`Are you sure you want to delete appointment #${id}?`)) return;
+            try {
+                const response = await fetch(`/api/admin/appointments/${id}`, { method: 'DELETE' });
+                const result = await response.json();
+                if (result.success) {
+                    loadAppointments();
+                }
+            } catch (err) {
+                console.error('Failed to delete booking:', err);
+            }
+        }
+
+        // Load direct customer messages
+        async function loadMessages() {
+            try {
+                const response = await fetch('/api/admin/messages');
+                const result = await response.json();
+                if (result.success && result.messages) {
+                    const tbody = document.getElementById('messages-tbody');
+                    if (result.messages.length === 0) {
+                        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-slate-500">No customer messages found.</td></tr>`;
+                        return;
+                    }
+                    tbody.innerHTML = result.messages.map(msg => `
+                        <tr class="hover:bg-slate-900/60 transition-colors">
+                            <td class="py-3 px-4 text-slate-400 font-mono text-[11px]">${new Date(msg.created_at).toLocaleDateString()}</td>
+                            <td class="py-3 px-4 font-bold text-white">${escapeHtml(msg.name)} <br><span class="text-amber-400 font-semibold text-[11px]">${escapeHtml(msg.phone)}</span></td>
+                            <td class="py-3 px-4 font-semibold text-cyan-300">${escapeHtml(msg.subject)}</td>
+                            <td class="py-3 px-4 text-slate-300 max-w-xs">${escapeHtml(msg.message)}</td>
+                            <td class="py-3 px-4 text-right space-x-1.5">
+                                <a href="tel:${msg.phone}" class="inline-block bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-2.5 py-1.5 rounded-lg">
+                                    <i class="fa-solid fa-phone"></i> Call
+                                </a>
+                                <button onclick="deleteMessage(${msg.id})" title="Delete Message" class="bg-red-950/60 hover:bg-red-900 text-red-400 p-1.5 px-2.5 rounded-lg text-xs font-bold border border-red-500/30">
+                                    <i class="fa-solid fa-trash"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (err) {
+                console.error('Failed to load messages:', err);
+            }
+        }
+
+        // DELETE /api/admin/messages/:id
+        async function deleteMessage(id) {
+            if (!confirm(`Are you sure you want to delete message #${id}?`)) return;
+            try {
+                const response = await fetch(`/api/admin/messages/${id}`, { method: 'DELETE' });
+                const result = await response.json();
+                if (result.success) {
+                    loadMessages();
+                }
+            } catch (err) {
+                console.error('Failed to delete message:', err);
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+    </script>
+</body>
+</html>

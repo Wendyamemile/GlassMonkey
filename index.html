@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlassMonkey | Mobile Windshield Replacement & Auto Glass Service</title>
+    <meta name="description" content="GlassMonkey provides same-day mobile windshield replacement and ADAS calibration at your home or work. $0 out-of-pocket insurance assistance & lifetime warranty.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#131e32',
+                            900: '#0f172a',
+                            950: '#090d16',
+                        },
+                        brand: {
+                            blue: '#2563eb',
+                            cyan: '#06b6d4',
+                            amber: '#f59e0b',
+                            amberHover: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass-panel {
+                background: rgba(19, 30, 50, 0.75);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+            }
+            .gradient-text-cyan {
+                background: linear-gradient(135deg, #60a5fa 0%, #38bdf8 50%, #22d3ee 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .gradient-text-amber {
+                background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .hero-bg-overlay {
+                background: radial-gradient(circle at 70% 30%, rgba(37, 99, 235, 0.18) 0%, rgba(15, 23, 42, 0.92) 60%, rgba(9, 13, 22, 0.98) 100%);
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white pb-16 md:pb-0">
+
+    <!-- 1. ANNOUNCEMENT BAR -->
+    <div id="announcement-bar" class="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-slate-950 py-2.5 px-4 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm font-semibold">
+            <div class="flex items-center gap-2">
+                <span class="relative flex h-2.5 w-2.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-900 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-slate-900"></span>
+                </span>
+                <span class="uppercase tracking-wider font-extrabold text-slate-950">EMERGENCY DISPATCH ACTIVE:</span>
+                <span class="hidden md:inline font-medium text-slate-900">Same-Day Mobile Vans Operating in Your Area</span>
+            </div>
+            
+            <div class="flex items-center gap-3 ml-auto sm:ml-0">
+                <span class="hidden sm:inline text-slate-900 text-xs font-semibold bg-amber-300/80 px-2 py-0.5 rounded">
+                    ⚡ Avg Arrival: 45 Mins
+                </span>
+                <a href="tel:9177314717" class="bg-slate-950 hover:bg-slate-900 text-amber-400 hover:text-amber-300 px-3 py-1 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 shadow-md group">
+                    <i class="fa-solid fa-phone text-xs group-hover:rotate-12 transition-transform"></i>
+                    <span>CALL DISPATCH: (917) 731-4717</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. HEADER NAV (CLEAN NAVBAR: LOGO + BOOK ONLINE + CONTACT US + CALL CTA) -->
+    <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-10 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-600 via-cyan-500 to-amber-400 p-0.5 shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all duration-300">
+                        <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+                            <i class="fa-solid fa-shield-cat text-cyan-400 text-xl group-hover:scale-110 transition-transform duration-300"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="font-heading font-extrabold text-xl tracking-wider text-white flex items-center gap-1">
+                            GLASS<span class="text-amber-400">MONKEY</span>
+                        </div>
+                        <div class="text-[10px] uppercase font-bold tracking-widest text-cyan-400 -mt-1">
+                            Mobile Auto Glass
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav (Only Book Online Now & Contact Us) -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                    <a href="booking.html" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-4 py-2 rounded-xl transition-all shadow-md flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-check text-xs"></i>
+                        <span>Book Online Now</span>
+                    </a>
+                    <a href="contact.html" class="text-slate-300 hover:text-cyan-400 transition-colors font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-envelope text-xs text-cyan-400"></i>
+                        <span>Contact Us</span>
+                    </a>
+                </nav>
+
+                <!-- Header CTA Button -->
+                <div class="hidden lg:flex items-center gap-4">
+                    <div class="text-right">
+                        <div class="text-[11px] text-slate-400 uppercase font-semibold tracking-wider">Free Mobile Service</div>
+                        <div class="text-sm font-bold text-white">We Come To You 24/7</div>
+                    </div>
+                    <a href="tel:9177314717" class="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-all shadow-lg shadow-blue-600/30 flex items-center gap-2 border border-blue-400/30">
+                        <i class="fa-solid fa-phone text-xs"></i>
+                        <span>(917) 731-4717</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none" aria-label="Toggle Navigation Menu">
+                    <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-3 pb-6 space-y-3">
+            <a href="booking.html" class="block px-4 py-3 rounded-xl text-slate-950 font-black bg-amber-500 hover:bg-amber-400 text-base text-center shadow-lg">
+                <i class="fa-solid fa-calendar-check mr-2"></i> Book Online Now
+            </a>
+            <a href="contact.html" class="block px-4 py-2.5 rounded-xl text-white font-bold bg-slate-800 hover:bg-slate-700 text-base text-center">
+                <i class="fa-solid fa-envelope mr-2 text-cyan-400"></i> Contact Us
+            </a>
+            <a href="tel:9177314717" class="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl text-base shadow-lg">
+                <i class="fa-solid fa-phone mr-2"></i> Call Dispatch: (917) 731-4717
+            </a>
+        </div>
+    </header>
+
+    <!-- 3. HERO SECTION (SIMPLE & HIGH CONVERTING) -->
+    <section class="relative pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="assets/hero.jpg" alt="Mobile Auto Glass Technician" class="w-full h-full object-cover object-center opacity-25 filter blur-[1px]">
+            <div class="absolute inset-0 hero-bg-overlay"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-3xl mx-auto text-center space-y-6">
+                
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-800/90 border border-cyan-500/30 text-cyan-300 text-xs font-semibold tracking-wide">
+                    <i class="fa-solid fa-van-shuttle text-amber-400"></i>
+                    <span>#1 MOBILE WINDSHIELD REPLACEMENT & REPAIR</span>
+                </div>
+
+                <h1 class="font-heading font-black text-4xl sm:text-6xl lg:text-7xl tracking-tight text-white leading-[1.1]">
+                    WE COME TO YOU. <br>
+                    <span class="gradient-text-cyan">FAST, MOBILE &</span> <br>
+                    <span class="gradient-text-amber">$0 OUT-OF-POCKET.</span>
+                </h1>
+
+                <p class="text-slate-300 text-base sm:text-xl max-w-2xl mx-auto leading-relaxed">
+                    Don't waste half your day at a repair shop! GlassMonkey dispatches certified mobile technicians straight to your driveway or workplace.
+                </p>
+
+                <!-- Hero Action Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                    <a href="booking.html" class="w-full sm:w-auto bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black py-4 px-8 rounded-2xl text-base sm:text-lg shadow-xl shadow-amber-500/25 flex items-center justify-center gap-3 uppercase tracking-wide transition-all transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-calendar-check text-xl"></i>
+                        <span>BOOK ONLINE NOW</span>
+                    </a>
+                    <a href="contact.html" class="w-full sm:w-auto bg-slate-900/90 hover:bg-slate-800 text-white border border-slate-700 font-bold py-4 px-8 rounded-2xl text-base flex items-center justify-center gap-2 transition-all">
+                        <i class="fa-solid fa-envelope text-cyan-400"></i>
+                        <span>Contact Dispatch</span>
+                    </a>
+                </div>
+
+                <!-- Trust Badges Bar -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-10 text-left">
+                    <div class="glass-panel p-4 rounded-xl flex items-center gap-3 border-l-4 border-l-amber-400">
+                        <i class="fa-solid fa-shield-heart text-amber-400 text-2xl"></i>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Lifetime Leak Warranty</h4>
+                            <p class="text-slate-400 text-xs">100% leak & noise guarantee.</p>
+                        </div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl flex items-center gap-3 border-l-4 border-l-blue-500">
+                        <i class="fa-solid fa-file-invoice-dollar text-blue-400 text-2xl"></i>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">$0 Out-of-Pocket</h4>
+                            <p class="text-slate-400 text-xs">We file insurance paperwork.</p>
+                        </div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl flex items-center gap-3 border-l-4 border-l-cyan-400">
+                        <i class="fa-solid fa-camera-rotate text-cyan-400 text-2xl"></i>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">ADAS Calibration</h4>
+                            <p class="text-slate-400 text-xs">Safety camera alignment.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SERVICES OVERVIEW GRID -->
+    <section class="py-16 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-cyan-400">What We Do</span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-white mt-2">OUR MOBILE SERVICES</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Service 1 -->
+                <div class="glass-panel rounded-2xl overflow-hidden flex flex-col justify-between h-full">
+                    <img src="assets/replacement.jpg" alt="Windshield Replacement" class="w-full h-56 object-cover">
+                    <div class="p-6 space-y-3 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-heading text-xl font-bold text-white">Full Windshield Replacement</h3>
+                            <p class="text-slate-300 text-xs mt-2 leading-relaxed">
+                                Complete removal of damaged glass using OEM-grade adhesive and original equipment specification glass. Restores original structural safety.
+                            </p>
+                        </div>
+                        <a href="booking.html" class="block text-center bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl text-xs uppercase tracking-wider transition-all mt-4">
+                            Book Replacement
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="glass-panel rounded-2xl overflow-hidden flex flex-col justify-between h-full">
+                    <img src="assets/adas.jpg" alt="ADAS Calibration" class="w-full h-56 object-cover">
+                    <div class="p-6 space-y-3 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-heading text-xl font-bold text-white">ADAS Camera Calibration</h3>
+                            <p class="text-slate-300 text-xs mt-2 leading-relaxed">
+                                Precision laser camera alignment for lane departure warning, adaptive cruise control, and automatic emergency braking safety systems.
+                            </p>
+                        </div>
+                        <a href="booking.html" class="block text-center bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 rounded-xl text-xs uppercase tracking-wider transition-all mt-4">
+                            Book Calibration
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. CALL TO ACTION BANNER -->
+    <section class="py-16 bg-slate-950 relative border-t border-slate-800">
+        <div class="max-w-5xl mx-auto px-4 text-center space-y-6">
+            <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-white">READY TO SCHEDULE YOUR MOBILE INSTALL?</h2>
+            <p class="text-slate-300 text-sm max-w-xl mx-auto">
+                Lock in your appointment online in under 60 seconds, or get in touch directly with our dispatch team.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 pt-2">
+                <a href="booking.html" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-8 py-3.5 rounded-xl text-base shadow-lg uppercase tracking-wider">
+                    <i class="fa-solid fa-calendar-check mr-2"></i> Book Online Now
+                </a>
+                <a href="contact.html" class="bg-slate-900 border border-slate-700 text-white font-bold px-8 py-3.5 rounded-xl text-base hover:bg-slate-800">
+                    <i class="fa-solid fa-envelope mr-2 text-cyan-400"></i> Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FOOTER -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-10 text-slate-400 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <span class="font-heading font-black text-lg text-white">GLASS<span class="text-amber-400">MONKEY</span></span>
+                <span class="text-slate-500">| Mobile Auto Glass Service</span>
+            </div>
+            <div class="flex gap-6 font-semibold">
+                <a href="booking.html" class="text-amber-400 hover:underline">Book Online Now</a>
+                <a href="contact.html" class="text-slate-300 hover:underline">Contact Us</a>
+                <a href="tel:9177314717" class="text-cyan-400 hover:underline">(917) 731-4717</a>
+            </div>
+            <div class="text-slate-500">
+                © <span id="year">2026</span> GlassMonkey Mobile Inc.
+            </div>
+        </div>
+    </footer>
+
+    <!-- STICKY MOBILE BOTTOM CTA -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-t border-slate-800 p-2.5 px-4 flex items-center gap-3">
+        <a href="tel:9177314717" class="flex-1 bg-slate-800 text-amber-400 font-extrabold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 border border-amber-500/30">
+            <i class="fa-solid fa-phone"></i>
+            <span>CALL DISPATCH</span>
+        </a>
+        <a href="booking.html" class="flex-1 bg-amber-500 text-slate-950 font-black py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 uppercase tracking-wide">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>BOOK ONLINE</span>
+        </a>
+    </div>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    </script>
+</body>
+</html>

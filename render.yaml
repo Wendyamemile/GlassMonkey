@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: glassmonkey-autoglass
+    env: node
+    plan: free
+    buildCommand: echo "No build required"
+    startCommand: node server.js
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 10000
