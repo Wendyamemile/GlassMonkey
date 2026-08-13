@@ -274,11 +274,15 @@
             loadMessages();
         }
 
+        const API_BASE = window.location.hostname.includes('github.io')
+            ? 'https://glassmonkey-autoglass.onrender.com'
+            : '';
+
         // Fetch all appointments from REST API & localStorage (hybrid sync)
         async function loadAppointments() {
             let apiAppointments = [];
             try {
-                const response = await fetch('/api/admin/appointments');
+                const response = await fetch(`${API_BASE}/api/admin/appointments`);
                 const result = await response.json();
                 if (result.success) {
                     apiAppointments = result.appointments;
@@ -453,7 +457,7 @@
             localStorage.setItem('glassmonkey_bookings', JSON.stringify(updatedLocal));
 
             try {
-                await fetch(`/api/admin/appointments/${id}`, {
+                await fetch(`${API_BASE}/api/admin/appointments/${id}`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ status: newStatus })
@@ -475,7 +479,7 @@
             localStorage.setItem('glassmonkey_bookings', JSON.stringify(filteredLocal));
 
             try {
-                await fetch(`/api/admin/appointments/${id}`, { method: 'DELETE' });
+                await fetch(`${API_BASE}/api/admin/appointments/${id}`, { method: 'DELETE' });
             } catch (err) {
                 console.log('Server offline or static hosting. Local record deleted.');
             }
@@ -486,7 +490,7 @@
         // Load direct customer messages
         async function loadMessages() {
             try {
-                const response = await fetch('/api/admin/messages');
+                const response = await fetch(`${API_BASE}/api/admin/messages`);
                 const result = await response.json();
                 if (result.success && result.messages) {
                     const tbody = document.getElementById('messages-tbody');
@@ -520,7 +524,7 @@
         async function deleteMessage(id) {
             if (!confirm(`Are you sure you want to delete message #${id}?`)) return;
             try {
-                const response = await fetch(`/api/admin/messages/${id}`, { method: 'DELETE' });
+                const response = await fetch(`${API_BASE}/api/admin/messages/${id}`, { method: 'DELETE' });
                 const result = await response.json();
                 if (result.success) {
                     loadMessages();

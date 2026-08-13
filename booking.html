@@ -471,15 +471,19 @@
             localBookings.unshift(payload);
             localStorage.setItem('glassmonkey_bookings', JSON.stringify(localBookings));
 
-            // Also send to backend REST API if server is available
+            const API_BASE = window.location.hostname.includes('github.io')
+                ? 'https://glassmonkey-autoglass.onrender.com'
+                : '';
+
+            // Send to live cloud REST API backend
             try {
-                await fetch('/api/book', {
+                await fetch(`${API_BASE}/api/book`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
             } catch (err) {
-                console.log('Server offline or static environment. Booking saved locally.');
+                console.log('Server offline or static fallback. Booking saved locally.');
             }
 
             document.getElementById('booking-summary-date').textContent = dateVal;
