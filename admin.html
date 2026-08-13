@@ -274,20 +274,33 @@
             loadMessages();
         }
 
-        // Fetch all appointments from GET /api/admin/appointments
+        // Fetch all appointments from REST API & localStorage (hybrid sync)
         async function loadAppointments() {
+            let apiAppointments = [];
             try {
                 const response = await fetch('/api/admin/appointments');
                 const result = await response.json();
-                
                 if (result.success) {
-                    allAppointments = result.appointments;
-                    renderStats(allAppointments);
-                    renderTable(allAppointments);
+                    apiAppointments = result.appointments;
                 }
             } catch (err) {
-                console.error('Failed to fetch appointments:', err);
+                console.log('Server API unreachable. Reading from localStorage.');
             }
+
+            const localBookings = JSON.parse(localStorage.getItem('glassmonkey_bookings') || '[]');
+            
+            // Merge local and API bookings uniquely by ID or timestamp
+            const map = new Map();
+            apiAppointments.forEach(item => map.set(String(item.id), item));
+            localBookings.forEach(item => {
+                if (!map.has(String(item.id))) {
+                    map.set(String(item.id), item);
+                }
+            });
+
+            allAppointments = Array.from(map.values());
+            renderStats(allAppointments);
+            renderTable(allAppointments);
         }
 
         // Render Stats Header Cards
@@ -432,35 +445,42 @@
             renderTable(filtered);
         }
 
-        // PATCH /api/admin/appointments/:id to update status
+        // Update status in API & localStorage
         async function updateStatus(id, newStatus) {
+            // Update localStorage
+            const localBookings = JSON.parse(localStorage.getItem('glassmonkey_bookings') || '[]');
+            const updatedLocal = localBookings.map(b => String(b.id) === String(id) ? { ...b, status: newStatus } : b);
+            localStorage.setItem('glassmonkey_bookings', JSON.stringify(updatedLocal));
+
             try {
-                const response = await fetch(`/api/admin/appointments/${id}`, {
+                await fetch(`/api/admin/appointments/${id}`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ status: newStatus })
                 });
-                const result = await response.json();
-                if (result.success) {
-                    loadAppointments();
-                }
             } catch (err) {
-                console.error('Failed to update status:', err);
+                console.log('Server offline or static hosting. Local state updated.');
             }
+
+            loadAppointments();
         }
 
-        // DELETE /api/admin/appointments/:id
+        // Delete booking from API & localStorage
         async function deleteBooking(id) {
             if (!confirm(`Are you sure you want to delete appointment #${id}?`)) return;
+            
+            // Delete from localStorage
+            const localBookings = JSON.parse(localStorage.getItem('glassmonkey_bookings') || '[]');
+            const filteredLocal = localBookings.filter(b => String(b.id) !== String(id));
+            localStorage.setItem('glassmonkey_bookings', JSON.stringify(filteredLocal));
+
             try {
-                const response = await fetch(`/api/admin/appointments/${id}`, { method: 'DELETE' });
-                const result = await response.json();
-                if (result.success) {
-                    loadAppointments();
-                }
+                await fetch(`/api/admin/appointments/${id}`, { method: 'DELETE' });
             } catch (err) {
-                console.error('Failed to delete booking:', err);
+                console.log('Server offline or static hosting. Local record deleted.');
             }
+
+            loadAppointments();
         }
 
         // Load direct customer messages

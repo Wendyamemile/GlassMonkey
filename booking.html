@@ -451,6 +451,7 @@
             const cityVal = document.getElementById('booking-city').value;
 
             const payload = {
+                id: Date.now(),
                 name: nameVal,
                 phone: phoneVal,
                 email: emailVal,
@@ -460,42 +461,39 @@
                 time_slot: timeSlot,
                 location_type: locationType,
                 address: addressVal,
-                zip: cityVal
+                zip: cityVal,
+                status: 'Pending',
+                created_at: new Date().toISOString()
             };
 
+            // Save locally to localStorage so it works on GitHub Pages & offline immediately
+            const localBookings = JSON.parse(localStorage.getItem('glassmonkey_bookings') || '[]');
+            localBookings.unshift(payload);
+            localStorage.setItem('glassmonkey_bookings', JSON.stringify(localBookings));
+
+            // Also send to backend REST API if server is available
             try {
-                const response = await fetch('/api/book', {
+                await fetch('/api/book', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                const result = await response.json();
-
-                if (result.success) {
-                    document.getElementById('booking-summary-date').textContent = dateVal;
-                    document.getElementById('booking-summary-slot').textContent = timeSlot;
-                    document.getElementById('booking-summary-service').textContent = serviceVal;
-                    document.getElementById('booking-summary-type').textContent = locationType;
-                    
-                    if (locationType.includes('Mobile')) {
-                        document.getElementById('booking-summary-location').textContent = `${addressVal}, ${cityVal}`;
-                    } else {
-                        document.getElementById('booking-summary-location').textContent = `GlassMonkey Service Center`;
-                    }
-
-                    document.getElementById('booking-modal').classList.remove('hidden');
-                } else {
-                    alert('Error saving appointment: ' + (result.error || 'Please try again.'));
-                }
             } catch (err) {
-                console.error('API Error:', err);
-                // Fallback display if offline
-                document.getElementById('booking-summary-date').textContent = dateVal;
-                document.getElementById('booking-summary-slot').textContent = timeSlot;
-                document.getElementById('booking-summary-service').textContent = serviceVal;
-                document.getElementById('booking-summary-type').textContent = locationType;
-                document.getElementById('booking-modal').classList.remove('hidden');
+                console.log('Server offline or static environment. Booking saved locally.');
             }
+
+            document.getElementById('booking-summary-date').textContent = dateVal;
+            document.getElementById('booking-summary-slot').textContent = timeSlot;
+            document.getElementById('booking-summary-service').textContent = serviceVal;
+            document.getElementById('booking-summary-type').textContent = locationType;
+            
+            if (locationType.includes('Mobile')) {
+                document.getElementById('booking-summary-location').textContent = `${addressVal}, ${cityVal}`;
+            } else {
+                document.getElementById('booking-summary-location').textContent = `GlassMonkey Service Center`;
+            }
+
+            document.getElementById('booking-modal').classList.remove('hidden');
         }
     </script>
 </body>
